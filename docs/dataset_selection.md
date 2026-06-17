@@ -1,0 +1,7 @@
+# Dataset selection
+
+This is a deliberately small **reference-genome demonstration cohort**, not a prevalence sample. Inclusion was fixed before analysis: four distinct, published, named *S. aureus* strains with versioned complete RefSeq assemblies and BioSample links (N315, MW2, MRSA252, USA300_FPR3757). One assembly per named specimen was selected. An expected sample size of 20–40 was not forced because isolate-level phenotype and epidemiology are absent and computational screening software is unavailable on this host.
+
+The exact records and URLs are in [`genome_manifest.csv`](../data/metadata/genome_manifest.csv). NCBI provenance: [N315 sequence](https://www.ncbi.nlm.nih.gov/nuccore/NC_002745.2), [MW2 BioProject](https://www.ncbi.nlm.nih.gov/bioproject/306), [MRSA252 BioProject](https://www.ncbi.nlm.nih.gov/bioproject/265), [USA300_FPR3757 BioProject](https://www.ncbi.nlm.nih.gov/bioproject/16313). The association of MRSA252 with hospital strains is stated in its BioProject. USA300's history is not proof of the setting where the sequenced specimen was acquired.
+
+No collection year, geography, specimen source, sequencing platform or AST phenotype was imputed. These fields remain blank where unverified. The cohort is heavily selected, old and lineage-diverse; marker proportions would describe only these four assemblies and should not be generalized. Metadata-supported epidemiological or genotype–phenotype comparisons are not currently possible.

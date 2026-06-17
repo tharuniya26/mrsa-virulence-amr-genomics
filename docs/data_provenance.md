@@ -1,0 +1,5 @@
+# Data provenance
+
+Four versioned nucleotide assemblies were downloaded on 17 October 2026 from the HTTPS `genomic.fna.gz` URLs in the manifest. Observed SHA-256 digests are retained in [`download_checksums.tsv`](../data/metadata/download_checksums.tsv); the raw files and local digest copy are Git-ignored. From a fresh clone, run `python -m src.data_acquisition` to recreate them. The script verifies the tracked checksums, gzip integrity and FASTA start; QC then validates sequence identifiers and bases.
+
+The local source DOCX is a historical private input, outside this repository. It was reviewed but not used as genomic data. The generated `results/genome_qc.csv` and `figures/genome_qc.*` derive solely from downloaded NCBI sequences. AMR, virulence, MLST, SCCmec and phenotype outputs have not been produced. NCBI accession pages and download methods: [NCBI Datasets](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/datasets/download/genome/) and linked accession records in the selection note.
