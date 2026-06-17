@@ -1,0 +1,5 @@
+assembly_accession,assembly_length_bp,gc_percent,contig_count,n50_bp,ambiguous_percent,qc_status,qc_note
+GCF_000009645.1,2839469,32.808,2,2814816,0.0,pass,
+GCF_000011265.1,2820462,32.83,1,2820462,0.0,pass,
+GCF_000011505.1,2902619,32.807,1,2902619,0.0,pass,
+GCF_000013465.1,2917469,32.691,4,2872769,0.0,pass,
