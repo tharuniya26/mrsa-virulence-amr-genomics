@@ -1,0 +1,3 @@
+Genomes selected: 4
+Genomes passing exploratory assembly QC: 4
+No marker prevalence calculated because a validated complete marker assessment is unavailable.
