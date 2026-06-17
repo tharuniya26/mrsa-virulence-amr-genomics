@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "Please cite this software as follows. Genome data retain their original NCBI attribution."
+title: "Genomic Investigation of MRSA Virulence and Antimicrobial Resistance"
+type: software
+authors:
+  - family-names: Anpalakan
+    given-names: Tharuniya
+license: MIT

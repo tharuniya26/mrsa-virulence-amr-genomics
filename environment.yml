@@ -1,0 +1,15 @@
+name: mrsa-genomics
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - pandas=2.2
+  - matplotlib=3.9
+  - pytest=8
+  - jupyterlab=4
+  - ncbi-amrfinderplus
+  - mlst
+  - pip
+  - pip:
+      - reportlab>=4,<6
