@@ -4,7 +4,22 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 import pandas as pd
+import matplotlib
+
+# The pipeline writes files and never opens an interactive window.  Selecting a
+# non-GUI backend makes figure generation reproducible on servers and minimal
+# Windows/Python installations where Tk is unavailable.
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+matplotlib.rcParams["svg.hashsalt"] = "mrsa-genomics"
+
+
+def _save_svg(fig, path: Path, **kwargs) -> None:
+    """Write deterministic SVG text without generator-added trailing spaces."""
+    fig.savefig(path, metadata={"Date": None}, **kwargs)
+    lines = path.read_text(encoding="utf-8").splitlines()
+    path.write_text("\n".join(line.rstrip() for line in lines) + "\n", encoding="utf-8")
 
 
 def qc_figure(qc_file: Path, figures: Path) -> None:
@@ -23,8 +38,8 @@ def qc_figure(qc_file: Path, figures: Path) -> None:
         axis.tick_params(axis="x", rotation=45)
         axis.set_xlabel("RefSeq assembly accession")
     fig.suptitle("Public S. aureus reference assembly QC")
-    for suffix in ("png", "svg"):
-        fig.savefig(figures / f"genome_qc.{suffix}", dpi=220)
+    fig.savefig(figures / "genome_qc.png", dpi=220)
+    _save_svg(fig, figures / "genome_qc.svg", dpi=220)
     plt.close(fig)
 
 

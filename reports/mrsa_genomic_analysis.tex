@@ -50,7 +50,7 @@
 \vfill
 \begin{minipage}{0.84\textwidth}
 \color{muted}\small
-\textbf{Study status.} Four versioned public assemblies have been acquired and assessed with an exploratory FASTA quality-control screen. Resistance and virulence gene calling, molecular typing, and genotype--phenotype comparisons await the specified external tools and verified metadata. This document reports the completed assembly analysis and defines the remaining computational work without treating planned analyses as findings.
+\textbf{Study status (revalidated 6 November 2026).} Four versioned public assemblies have been acquired and assessed with an exploratory FASTA quality-control screen. Resistance and virulence gene calling, molecular typing, and genotype--phenotype comparisons were not performed because the required software, databases, or metadata were unavailable. This document reports the completed assembly analysis without treating planned analyses as findings.
 \end{minipage}
 \vspace{12mm}\\
 {\color{ink}\rule{\textwidth}{0.6pt}}
@@ -58,13 +58,22 @@
 \hypersetup{pageanchor=true}
 
 \begin{abstract}
-\noindent\textbf{Background.} Genome sequencing can identify known resistance and virulence determinants in \textit{Staphylococcus aureus}, provided that assemblies, reference databases, and isolate metadata are adequately documented. \textbf{Objective.} This study establishes a reproducible workflow for a small collection of public reference assemblies and evaluates the assembly data available before molecular screening. \textbf{Methods.} Four distinct, versioned NCBI RefSeq assemblies were selected as a technical demonstration cohort. Downloaded FASTA files were checked for valid sequence identifiers and characters, and assembly length, GC content, N50, sequence-record count, and ambiguous-base fraction were calculated. A predefined exploratory screen was applied. \textbf{Results.} All four files passed this screen. Assembly lengths ranged from 2,820,462 to 2,917,469 bp; sequence-record counts ranged from one to four. \textbf{Interpretation.} These are assembly-level observations, not evidence of completeness, antimicrobial susceptibility, toxin expression, or clinical phenotype. AMRFinderPlus screening and typing remain unexecuted in the present environment. The cohort cannot support population prevalence or acquisition-setting comparisons.
+\noindent\textbf{Background.} Genome sequencing can identify known resistance and virulence determinants in \textit{Staphylococcus aureus}, provided that assemblies, reference databases, and isolate metadata are adequately documented. \textbf{Objective.} This study establishes a reproducible workflow for a small collection of public reference assemblies and evaluates the assembly data available before molecular screening. \textbf{Methods.} Four distinct, versioned NCBI RefSeq assemblies were selected as a technical demonstration cohort. Downloaded FASTA files were checked for valid sequence identifiers, non-empty records, and valid characters; assembly length, GC content, N50, sequence-record count, and ambiguous-base fraction were calculated. A predefined exploratory screen was applied. \textbf{Results.} All four files passed this screen. Assembly lengths ranged from 2,820,462 to 2,917,469 bp; sequence-record counts ranged from one to four. Four automated tests and six notebooks executed successfully. \textbf{Interpretation.} These are assembly-level observations, not evidence of completeness, antimicrobial susceptibility, toxin expression, or clinical phenotype. AMRFinderPlus, MLST, and SCCmec analyses were not performed in the present environment. The cohort cannot support population prevalence or acquisition-setting comparisons.
 \end{abstract}
 
 \section{Introduction}
 \textit{Staphylococcus aureus} is a Gram-positive coccus that colonizes the skin and mucosa of humans and can cause skin and soft-tissue infection, bacteremia, pneumonia, endocarditis, and other invasive disease. Colonization, host susceptibility, local tissue conditions, and strain-specific traits all contribute to the transition from carriage to infection \cite{Tong2015,Foster2004}. Methicillin-resistant \textit{S. aureus} (MRSA) is of particular interest because resistance to many beta-lactams can constrain treatment and because successful lineages circulate through both community and healthcare settings. Epidemiological labels describe where and how infection was acquired; they cannot be assigned solely from a genomic signature.
 
 This project asks: \emph{What antimicrobial resistance and virulence determinants can be identified in a reproducibly selected collection of publicly available \textit{S. aureus} genomes, and how do their distributions vary across the available isolate metadata?} The question is conditional. A sequence-based screen can address gene content only when the caller, reference database, and target coverage are validated. A comparison between isolate groups requires authentic group metadata, and a genotype--phenotype comparison additionally requires susceptibility measurements. The current report therefore presents the completed acquisition and assembly QC, then specifies how the later stages should be carried out.
+
+\section{Research objectives}
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.15em,topsep=0.2em]
+\item Preserve exact assembly accession, BioSample, source-URL, and checksum provenance.
+\item Validate FASTA structure and summarize elementary assembly properties using explicit decision rules.
+\item Screen for AMR and virulence-associated determinants only if a versioned caller and database can be executed and reviewed.
+\item Assign MLST or SCCmec types only when dedicated typing evidence is complete and adequately supported.
+\item Compare the four assemblies descriptively without interpreting this selected cohort as a population sample or inferring phenotype from genotype alone.
+\end{enumerate}
 
 \section{Biological and genomic context}
 \subsection{Methicillin resistance and SCCmec}
@@ -110,7 +119,7 @@ The acquisition module downloads each exact HTTPS `genomic.fna.gz' file listed i
 Total length is the sum of all FASTA-record lengths, including plasmid records where present. GC fraction is the number of G and C bases divided by that total; ambiguous fraction is the number of N bases divided by the same total. N50 is the length of the sequence record at which the cumulative length of records sorted from longest to shortest reaches at least half of the total assembly length. The quality screen flags an assembly for review if its total length lies outside 2.5--3.2 Mbp, if it has more than 20 records, or if more than 1\% of bases are N. These pragmatic bounds were chosen for this complete-reference demonstration and are not a universal acceptance criterion for \textit{S. aureus}. No independent completeness or contamination estimator was run.
 
 \subsection{Determinant screening and typing: specified, not executed}
-The repository includes an AMRFinderPlus wrapper for consistent assembly-level screening. Its specified invocation uses nucleotide assemblies, the \textit{S. aureus} organism option, and the `--plus' option for curated non-AMR categories. The wrapper preserves the native tab-separated output, extracts positive AMR calls, and records software/database versions and reported identity and coverage values. A separate parser extracts explicitly labelled virulence calls. These methods follow the curated-reference approach described for AMRFinder and AMRFinderPlus \cite{Feldgarden2019,Feldgarden2021,NCBI_AMRFinderPlus}. The executable and database were not available in the present Windows environment, so no gene calls were made.
+The repository includes an AMRFinderPlus wrapper for consistent assembly-level screening. Its specified invocation uses nucleotide assemblies, the \textit{S. aureus} organism option, and \texttt{--plus} for curated non-AMR categories. The wrapper preserves the native tab-separated output, extracts positive AMR calls, and records software/database versions and reported identity and coverage values. A separate parser extracts explicitly labelled virulence calls. These methods follow the curated-reference approach described for AMRFinder and AMRFinderPlus \cite{Feldgarden2019,Feldgarden2021,NCBI_AMRFinderPlus}. The executable and database were not available in the present Windows environment; an execution attempt stopped explicitly before analysis, so no gene calls were made.
 
 Before interpreting a non-call for \textit{mecA}, \textit{mecC}, a tet-family member, or either PVL component, the reference database must be audited for that target and the native output checked for partial or ambiguous alignments. A positive hit should be considered with its identity, reference coverage, method and genomic context. Sequence typing requires a validated multilocus-sequence-typing implementation and allele database \cite{Enright2000}; SCCmec assignment requires cassette-level evidence \cite{IWGSCC2009}. Neither typing analysis was performed here.
 
@@ -140,7 +149,7 @@ USA300\_FPR3757 & 2,917,469 & 32.691 & 4 & 2,872,769 & 0.000 & Pass\\\bottomrule
 \label{fig:qc}
 \end{figure}
 
-The observed length range is 2,820,462--2,917,469 bp, and the sequence-record count ranges from one to four. All downloaded sequences contain zero N bases under the implemented counting rule. These observations neither validate species identity nor rule out contamination, structural errors, or missing genes. There are no AMR, virulence, MLST, SCCmec, or susceptibility results to report.
+The observed length range is 2,820,462--2,917,469 bp, and the sequence-record count ranges from one to four. All downloaded sequences contain zero N bases under the implemented counting rule. All four compressed-file SHA-256 values matched the tracked provenance table on revalidation. The automated suite passed four of four tests, and all six notebooks executed successfully in memory. Repeated figure builds were byte-identical and the displayed figures were visually inspected. These observations neither validate species identity nor rule out contamination, structural errors, or missing genes. There are no AMR, virulence, MLST, SCCmec, or susceptibility results to report.
 
 \section{Discussion}
 The acquisition and QC stages establish a traceable starting point for comparative genomics. Exact accession versions, BioSample identifiers, URLs, checksums, and the screening rule make the completed stage inspectable. At the same time, this cohort is a poor basis for biological frequency estimates: it is small, historically selected, and drawn from distinct studies and lineages. The all-pass QC result indicates only that the downloaded assemblies meet the stated elementary thresholds, not that all biologically relevant loci are complete and accurately assembled.
@@ -153,8 +162,8 @@ The historic source coursework described a patient-specific MRSA scenario but su
 \begin{itemize}
 \item The four reference assemblies are a convenience cohort; inference to contemporary MRSA populations is inappropriate.
 \item The QC stage has not used raw reads or a validated completeness/contamination estimator.
-\item AMRFinderPlus and its database have not run on these assemblies. The code is ready for execution in a compatible environment, followed by native-output review and database coverage checks.
-\item MLST and SCCmec typing need dedicated tools and manual evaluation of confidence, especially if cassette structure is fragmented.
+\item AMRFinderPlus and its database were unavailable and have not run on these assemblies. The code is ready for execution in a compatible environment, followed by native-output review and database coverage checks.
+\item MLST and SCCmec software/databases were unavailable. Typing needs dedicated tools and manual evaluation of confidence, especially if cassette structure is fragmented.
 \item No consistent collection, acquisition-setting, or authentic susceptibility metadata were verified; those comparisons must wait for suitable records.
 \item A phylogeny was omitted because homologous alignment, recombination assessment, and an appropriate sampling design have not been completed.
 \end{itemize}
@@ -163,7 +172,7 @@ The historic source coursework described a patient-specific MRSA scenario but su
 Four public, versioned \textit{S. aureus} assemblies were acquired and passed a documented exploratory FASTA QC screen. The principal research questions about resistance and virulence determinants remain open until validated screening is executed and its reference coverage reviewed. The resulting repository is a reproducible technical foundation for analysis, not a completed molecular survey or clinical diagnostic report.
 
 \section*{Reproducibility statement}
-The repository contains the exact manifest, tracked download checksums, source code, tests, notebook views, and figure-generation code. On a fresh clone, install the documented Python environment and run the acquisition, QC, and visualization modules from the repository root. This PDF was compiled from the LaTeX source in the \texttt{reports} directory with BibTeX entries in \texttt{references}. Run \texttt{python reports/build\_latex.py} to rebuild it. The completed QC used Python 3.14.2, pandas 3.0.6, and Matplotlib 3.11.2; AMRFinderPlus was not installed or run.
+The repository contains the exact manifest, tracked download checksums, source code, tests, notebook views, figure-generation code, and a dated execution log. On a fresh clone, install the documented Python environment and run the acquisition, QC, and visualization modules from the repository root. This PDF was compiled from the LaTeX source in the \texttt{reports} directory with BibTeX entries in \texttt{references}. Run \texttt{python reports/build\_latex.py} to rebuild it. Revalidation used Python 3.14.2, pandas 3.0.6, Matplotlib 3.11.2, and pytest 9.1.1; AMRFinderPlus, MLST, and SCCmec typing software were not installed or run.
 
 \bibliographystyle{unsrt}
 \bibliography{../references/bibliography}

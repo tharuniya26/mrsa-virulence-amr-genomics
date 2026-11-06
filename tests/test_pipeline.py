@@ -27,6 +27,9 @@ def test_qc_and_invalid_fasta(tmp_path):
     with gzip.open(p, "wt") as handle: handle.write(">same\nACGT\n>same\nACGT\n")
     with pytest.raises(ValueError, match="duplicate"):
         metrics(p)
+    with gzip.open(p, "wt") as handle: handle.write(">empty\n>sequence\nACGT\n")
+    with pytest.raises(ValueError, match="Empty FASTA record"):
+        metrics(p)
 
 
 def test_amr_and_virulence_parsers(tmp_path):

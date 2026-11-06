@@ -2,7 +2,24 @@
 
 **Tharuniya Anpalakan — Project Author**
 
-This portfolio project examines what a reproducible analysis can establish about antimicrobial resistance and virulence markers in public *Staphylococcus aureus* genomes. It uses four versioned NCBI RefSeq reference assemblies. The assembly download and quality-control stages have been executed; gene screening is implemented but awaits AMRFinderPlus in a compatible environment. No wet-lab sequencing or susceptibility testing is claimed.
+This portfolio project examines what a reproducible analysis can establish about antimicrobial resistance and virulence markers in public *Staphylococcus aureus* genomes. It uses four versioned NCBI RefSeq reference assemblies. The acquisition and assembly quality-control stages have been executed and independently rerun; gene screening is implemented but awaits AMRFinderPlus in a compatible environment. No wet-lab sequencing or susceptibility testing is claimed.
+
+## Verified project status
+
+The repository was revalidated on **6 November 2026**. The current boundary between results and planned work is:
+
+| Stage | Status | Verified evidence |
+|---|---|---|
+| Versioned assembly acquisition and integrity | Completed | 4/4 local gzip files match the tracked SHA-256 values |
+| FASTA validation and exploratory assembly QC | Completed | 4/4 assemblies parsed and passed the stated size, record-count and N-content screen |
+| QC and conceptual figures | Completed | PNG/SVG regenerated headlessly, visually inspected and reproducible byte-for-byte on repeated runs |
+| Comparative metadata/QC summary | Completed | Join rerun; AMR and virulence fields remain `not_assessed` |
+| Automated tests and notebooks | Completed | 4/4 tests and 6/6 notebooks executed successfully |
+| AMR and virulence screening | **Not performed** | `amrfinder` executable and database are unavailable on this host; no native result TSVs exist |
+| MLST and SCCmec typing | **Not performed** | Validated typing software/databases are unavailable on this host |
+| Phenotype and epidemiological comparisons | **Not supported** | Authentic AST and consistent acquisition-setting metadata are absent |
+
+The detailed command record is in the [execution log](docs/execution_log.md).
 
 ## Research question
 
@@ -30,7 +47,7 @@ All **4/4 downloaded assemblies passed the predefined exploratory QC screen**. L
 
 ![Genome acquisition, QC, AMR and virulence screening workflow](figures/workflow.svg)
 
-Download versioned assemblies → validate FASTA and calculate QC → run NCBI AMRFinderPlus with a versioned database → parse positive AMR/virulence calls → review hit quality and database coverage → compare only metadata-supported groups. The first two steps are complete. AMRFinderPlus, MLST, SCCmec and phenotype analysis remain pending. The [methods](docs/methodology.md) explain thresholds, result states and interpretation limits.
+Download versioned assemblies → validate FASTA and calculate QC → run NCBI AMRFinderPlus with a versioned database → parse positive AMR/virulence calls → review hit quality and database coverage → compare only metadata-supported groups. Acquisition, QC and the metadata/QC comparison are complete. AMRFinderPlus, MLST, SCCmec and phenotype analysis remain unperformed or unsupported. The [methods](docs/methodology.md) explain thresholds, result states and interpretation limits.
 
 ## Reproduce
 
@@ -45,11 +62,11 @@ python -m src.statistical_analysis
 pytest -q
 ```
 
-After installing and updating AMRFinderPlus's database, run `python -m src.amr_analysis` and `python -m src.virulence_analysis`, then rerun comparative analysis. Record `amrfinder --version` and `amrfinder --database_version`. Inspect the native TSVs and database coverage before interpreting non-calls. The wrappers do not infer susceptibility or toxin activity.
+After installing and updating AMRFinderPlus's database, run `python -m src.amr_analysis` and `python -m src.virulence_analysis`, then rerun comparative analysis. Record `amrfinder --version` and `amrfinder --database_version`. Inspect the native TSVs and database coverage before interpreting non-calls. The wrappers do not infer susceptibility or toxin activity. On a headless host, plotting uses Matplotlib's non-interactive `Agg` backend.
 
 ## Results and limits
 
-The executed result is assembly QC only. **No AMR or virulence gene findings, SCCmec types, sequence types, phenotypes or phylogenetic tree are reported.** The cohort is tiny and chosen from historic named strains; its marker frequencies would not estimate population prevalence. Metadata are incomplete. [Limitations](docs/limitations.md), [data provenance](docs/data_provenance.md), [source review](docs/source_review.md) and the [project audit](docs/project_audit.md) record the outstanding work. The detailed [LaTeX report](reports/mrsa_genomic_analysis.tex) and [compiled PDF](reports/mrsa_genomic_analysis.pdf) separate completed QC from pending analyses. Rebuild the PDF with `python reports/build_latex.py` after installing a LaTeX distribution with `pdflatex` and `bibtex`.
+The biological result currently supported by execution is assembly QC. **No AMR or virulence gene findings, SCCmec types, sequence types, phenotypes or phylogenetic tree are reported.** The comparative table is an executed integration output, but its marker columns are explicitly `not_assessed`. The cohort is tiny and chosen from historic named strains; its marker frequencies would not estimate population prevalence. Metadata are incomplete. [Limitations](docs/limitations.md), [data provenance](docs/data_provenance.md), [source review](docs/source_review.md), [project audit](docs/project_audit.md) and [execution log](docs/execution_log.md) record the outstanding work. The detailed [LaTeX report](reports/mrsa_genomic_analysis.tex) and [compiled PDF](reports/mrsa_genomic_analysis.pdf) separate completed QC from unavailable analyses.
 
 ## Project map
 

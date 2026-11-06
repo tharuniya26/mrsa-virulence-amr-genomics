@@ -21,6 +21,8 @@ def fasta_lengths(path: Path) -> tuple[list[int], int, int]:
                 identifier = line[1:].split()[0]
                 if not identifier or identifier in seen:
                     raise ValueError(f"Missing or duplicate FASTA identifier in {path}")
+                if seen and length == 0:
+                    raise ValueError(f"Empty FASTA record in {path}")
                 seen.add(identifier)
                 if len(seen) > 1:
                     lengths.append(length)
